@@ -7,6 +7,7 @@
  */
 
 import { createCheerioRouter } from 'crawlee';
+import { Actor } from 'apify';
 import {
     extractFromCards,
     extractFromHeadings,
@@ -151,14 +152,18 @@ function runExtractors($) {
     return [...seen.values()];
 }
 
+/** Cached input to avoid re-reading on every call */
+let _cachedInput = null;
+
 /**
  * Push extracted employees to the default Apify dataset.
  * Applies email pattern guessing when configured and no email was found.
  */
 async function pushEmployees(employees, sourceUrl, baseDomain) {
-    const { Actor } = await import('apify');
-    const input = await Actor.getInput() || {};
-    const enableGuessing = input.emailPatternGuessing !== false;
+    if (!_cachedInput) {
+        _cachedInput = await Actor.getInput() || {};
+    }
+    const enableGuessing = _cachedInput.emailPatternGuessing !== false;
 
     const items = employees.map((emp) => {
         let email = emp.email;
