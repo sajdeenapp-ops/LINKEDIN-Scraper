@@ -77,18 +77,6 @@ router.addDefaultHandler(async ({ request, $, enqueueLinks, log }) => {
         urls: topLinks.map((l) => l.url),
         label: 'TEAM',
     });
-
-    // Also enqueue generic internal links (limited) to explore the site
-    await enqueueLinks({
-        strategy: 'same-domain',
-        label: 'DEFAULT',
-        transformRequestFunction: (req) => {
-            // Skip non-HTML resources
-            const skip = ['.pdf', '.zip', '.png', '.jpg', '.jpeg', '.gif', '.svg', '.css', '.js'];
-            if (skip.some((ext) => req.url.toLowerCase().endsWith(ext))) return false;
-            return req;
-        },
-    });
 });
 
 // ──────────────────────────────────────────────
@@ -110,10 +98,15 @@ router.addHandler('TEAM', async ({ request, $, log, enqueueLinks }) => {
     }
 
     // Look for sub-pages (e.g. /team/page/2, /about/leadership)
+    // Strictly stay on the same domain
     await enqueueLinks({
-        strategy: 'same-domain',
         label: 'TEAM',
         globs: ['**/team/**', '**/people/**', '**/about/**', '**/leadership/**', '**/staff/**'],
+        transformRequestFunction: (req) => {
+            // Block any link that goes to a different domain
+            if (!isSameDomain(req.url, baseDomain)) return false;
+            return req;
+        },
     });
 });
 
