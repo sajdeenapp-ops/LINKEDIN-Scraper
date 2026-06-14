@@ -1,0 +1,20 @@
+{
+  "name": "company-employee-scraper",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Apify actor that extracts company employees' names, job titles, and emails from company websites without requiring cookies.",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "apify": "^3.2.6",
+    "crawlee": "^3.11.5",
+    "cheerio": "^1.0.0"
+  },
+  "scripts": {
+    "start": "node src/main.js",
+    "test": "echo \"No tests yet\" && exit 0"
+  },
+  "author": "",
+  "license": "ISC"
+}

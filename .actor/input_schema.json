@@ -1,0 +1,42 @@
+{
+  "title": "Company Employee Scraper Input",
+  "description": "Provide company websites to scrape for employee information.",
+  "type": "object",
+  "schemaVersion": 1,
+  "required": ["companyUrls"],
+  "properties": {
+    "companyUrls": {
+      "title": "Company URLs",
+      "description": "List of company website URLs (e.g., https://example.com). The actor will crawl these sites to find team/about pages.",
+      "type": "array",
+      "editor": "stringList",
+      "items": {
+        "type": "string"
+      },
+      "prefill": ["https://example.com"]
+    },
+    "maxPagesPerDomain": {
+      "title": "Max Pages Per Domain",
+      "description": "Maximum number of pages to crawl per company domain. Higher values find more employees but take longer.",
+      "type": "integer",
+      "default": 50,
+      "minimum": 5,
+      "maximum": 200,
+      "editor": "number"
+    },
+    "emailPatternGuessing": {
+      "title": "Enable Email Pattern Guessing",
+      "description": "When enabled, the actor will attempt to guess email addresses using common patterns (first.last@domain.com, etc.) when emails aren't found on the page.",
+      "type": "boolean",
+      "default": true,
+      "editor": "checkbox"
+    },
+    "proxyConfiguration": {
+      "title": "Proxy Configuration",
+      "description": "Select proxies to use for scraping. Recommended for large-scale runs.",
+      "type": "object",
+      "editor": "proxy",
+      "sectionCaption": "Proxy Settings"
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "companyUrls": [
+    "https://apify.com"
+  ],
+  "maxPagesPerDomain": 30,
+  "emailPatternGuessing": true
+}

@@ -1,0 +1,33 @@
+{
+  "actorSpecification": 1,
+  "name": "company-employee-scraper",
+  "title": "Company Employee Scraper",
+  "description": "Extracts employee names, job titles, and emails from company websites. No cookies required.",
+  "version": "1.0.0",
+  "input": "./input_schema.json",
+  "dockerfile": "../Dockerfile",
+  "storages": {
+    "dataset": {
+      "actorSpecification": 1,
+      "title": "Employee Data",
+      "views": {
+        "employees": {
+          "title": "Employees",
+          "transformation": {
+            "fields": ["name", "jobTitle", "email", "source", "companyDomain"]
+          },
+          "display": {
+            "component": "table",
+            "properties": {
+              "name": { "label": "Name", "format": "text" },
+              "jobTitle": { "label": "Job Title", "format": "text" },
+              "email": { "label": "Email", "format": "text" },
+              "source": { "label": "Source URL", "format": "link" },
+              "companyDomain": { "label": "Company Domain", "format": "text" }
+            }
+          }
+        }
+      }
+    }
+  }
+}
